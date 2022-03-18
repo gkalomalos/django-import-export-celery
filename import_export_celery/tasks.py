@@ -222,7 +222,7 @@ def run_export_job(pk):
     format = get_format(export_job)
     serialized = format.export_data(data)
     change_job_status(export_job, "export", "Export complete")
-    filename = "{app}-{model}-{date}.{extension}".format(
+    filename = "{date}.{extension}".format(
         app=export_job.app_label,
         model=export_job.model,
         date=str(timezone.now()),
