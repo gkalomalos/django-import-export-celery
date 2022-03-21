@@ -222,9 +222,7 @@ def run_export_job(pk):
     format = get_format(export_job)
     serialized = format.export_data(data)
     change_job_status(export_job, "export", "Export complete")
-    filename = "ZFYL-{date}.{extension}".format(
-        app=export_job.app_label,
-        model=export_job.model,
+    filename = "{date}-INVENT-initiative-export.{extension}".format(
         date=str(timezone.now()),
         extension=format.get_extension(),
     )
@@ -233,20 +231,13 @@ def run_export_job(pk):
     export_job.file.save(filename, ContentFile(serialized))
     if export_job.email_on_completion:
         send_mail(
-            _("Django: Export job completed"),
+            _("Your INVENT initiative export"),
             _(
-                "Your export job on model {app_label}.{model} has completed. You can download the file at the following link:\n\n{link}"
+                "Your INVENT initiatives export has been generated. You can download it using this link:\n\n{link}"
             ).format(
-                app_label=export_job.app_label,
-                model=export_job.model,
-                link=export_job.site_of_origin
-                + reverse(
-                    "admin:%s_%s_change"
-                    % (export_job._meta.app_label, export_job._meta.model_name,),
-                    args=[export_job.pk],
-                ),
+                link=export_job.site_of_origin + '/media/' + export_job.file
             ),
             settings.SERVER_EMAIL,
-            [export_job.updated_by.email],
+            ['invent@unicef.org'],
         )
     return
