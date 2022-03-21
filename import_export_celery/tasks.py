@@ -235,7 +235,7 @@ def run_export_job(pk):
             _(
                 "Your INVENT initiatives export has been generated. You can download it using this link:\n\n{link}"
             ).format(
-                link=export_job.site_of_origin + '/media/' + export_job.file
+                link=export_job.site_of_origin + '/media/' + export_job.file.name
             ),
             'invent@unicef.org',
             [export_job.updated_by.email],
