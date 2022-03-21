@@ -237,7 +237,7 @@ def run_export_job(pk):
             ).format(
                 link=export_job.site_of_origin + '/media/' + export_job.file
             ),
-            settings.SERVER_EMAIL,
-            ['invent@unicef.org'],
+            'invent@unicef.org',
+            [export_job.updated_by.email],
         )
     return
