@@ -233,9 +233,14 @@ def run_export_job(pk):
         send_mail(
             _("Your INVENT initiative export"),
             _(
-                "Your INVENT initiatives export has been generated. You can download it using this link:\n\n{link}"
+                "Your INVENT initiatives export has been generated. You can download it using this link:\n\n{link}" \
+                "\n\n" \
+                "You can also find it in the INVENT admin interface on the" \
+                "<a href='https://{site}/admin/import_export_celery/exportjob/'>exports page</a>\n" \
+                "https://{site}/admin/import_export_celery/exportjob/"
             ).format(
-                link=export_job.site_of_origin + '/media/' + export_job.file.name
+                link=export_job.site_of_origin + '/media/' + export_job.file.name,
+                site=export_job.site_of_origin
             ),
             'invent@unicef.org',
             [export_job.updated_by.email],
