@@ -237,7 +237,7 @@ def run_export_job(pk):
                 "\n\n" \
                 "You can also find it in the INVENT admin interface on the" \
                 "<a href='https://{site}/admin/import_export_celery/exportjob/'>exports page</a>\n" \
-                "https://{site}/admin/import_export_celery/exportjob/"
+                "{site}/admin/import_export_celery/exportjob/"
             ).format(
                 link=export_job.site_of_origin + '/media/' + export_job.file.name,
                 site=export_job.site_of_origin
