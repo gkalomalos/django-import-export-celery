@@ -236,7 +236,7 @@ def run_export_job(pk):
                 "Your INVENT initiatives export has been generated. You can download it using this link:\n\n{link}" \
                 "\n\n" \
                 "You can also find it in the INVENT admin interface on the" \
-                "<a href='https://{site}/admin/import_export_celery/exportjob/'>exports page</a>\n" \
+                " exports page:\n" \
                 "{site}/admin/import_export_celery/exportjob/"
             ).format(
                 link=export_job.site_of_origin + '/media/' + export_job.file.name,
