@@ -229,20 +229,23 @@ def run_export_job(pk):
     if not format.is_binary():
         serialized = serialized.encode("utf8")
     export_job.file.save(filename, ContentFile(serialized))
+    
     if export_job.email_on_completion:
+        short_name = getattr(settings, "PROJECT_SHORT_NAME", "TIIP")
+        from_email = getattr(settings, "DEFAULT_FROM_EMAIL", "john@example.org")
         send_mail(
-            _("Your INVENT initiative export"),
+            _("Your "+short_name+" initiative export"),
             _(
-                "Your INVENT initiatives export has been generated. You can download it using this link:\n\n{link}" \
+                "Your "+short_name+" export has been generated. You can download it using this link:\n\n{link}" \
                 "\n\n" \
-                "You can also find it in the INVENT admin interface on the" \
+                "You can also find it in the "+short_name+" admin interface on the" \
                 " exports page:\n" \
                 "{site}/admin/import_export_celery/exportjob/"
             ).format(
                 link=export_job.site_of_origin + '/media/' + export_job.file.name,
                 site=export_job.site_of_origin
             ),
-            'invent@unicef.org',
+            from_email,
             [export_job.updated_by.email],
         )
     return
