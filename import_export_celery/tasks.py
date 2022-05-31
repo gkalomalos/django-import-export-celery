@@ -9,6 +9,7 @@ from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.cache import cache
 from django.core.mail import send_mail
+from django.contrib.sites.models import Site
 
 from django.urls import reverse
 from django.utils.encoding import force_text
@@ -233,6 +234,7 @@ def run_export_job(pk):
     if export_job.email_on_completion:
         short_name = getattr(settings, "PROJECT_SHORT_NAME", "TIIP")
         from_email = getattr(settings, "DEFAULT_FROM_EMAIL", "john@example.org")
+        site_url = "https://{}".format(Site.objects.get_current().domain)
         send_mail(
             _("Your "+short_name+" initiative export"),
             _(
@@ -242,8 +244,8 @@ def run_export_job(pk):
                 " exports page:\n" \
                 "{site}/admin/import_export_celery/exportjob/"
             ).format(
-                link=export_job.site_of_origin + '/media/' + export_job.file.name,
-                site=export_job.site_of_origin
+                link=site_url + '/media/' + export_job.file.name,
+                site=site_url
             ),
             from_email,
             [export_job.updated_by.email],
