@@ -8,7 +8,8 @@ import codecs
 
 requires = ['Django', 'django-import-export', 'django-author']
 
-version = subprocess.check_output(['git','describe','--abbrev=0','--tags']).decode("utf-8")
+# version = subprocess.check_output(['git','describe','--abbrev=0','--tags']).decode("utf-8")
+version = '1.1.6.4'
 
 setup(
         name='django-import-export-celery',
